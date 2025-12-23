@@ -3,6 +3,7 @@
 
 An interactive, front-end-only web application built with React to visualize core Data Structures and Algorithms.
 This project focuses on helping users understand algorithmic logic through step-by-step animations and user-driven simulations.
+This project is [LIVE](https://dsa-visualizer-lime.vercel.app/) here
 
 ---
 
