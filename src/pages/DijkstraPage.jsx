@@ -162,6 +162,40 @@ const DijkstraPage = () => {
     window.addEventListener('mouseup', handleUp);
   };
 
+  const handleNodeTouchStart = (e, nodeId) => {
+    if (mode !== 'MOVE') return;
+    if (edgeModal.isOpen) return;
+    e.stopPropagation();
+
+    const handleTouchMove = (moveEvent) => {
+      // Prevent scrolling while dragging
+      if (moveEvent.cancelable) moveEvent.preventDefault();
+
+      const touch = moveEvent.touches[0];
+      const svg = document.querySelector('.graph-svg');
+      const rect = svg.getBoundingClientRect();
+
+      setNodes(prev => prev.map(n => {
+        if (n.id === nodeId) {
+          return {
+            ...n,
+            x: Math.max(20, Math.min(rect.width - 20, touch.clientX - rect.left)),
+            y: Math.max(20, Math.min(rect.height - 20, touch.clientY - rect.top))
+          };
+        }
+        return n;
+      }));
+    };
+
+    const handleTouchEnd = () => {
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
+  };
+
   // --- Algorithm Control ---
   const generateSteps = () => {
     if (!startNodeId || !endNodeId || startNodeId === endNodeId) {
@@ -404,6 +438,7 @@ const DijkstraPage = () => {
               className="node-group"
               transform={`translate(${node.x},${node.y})`}
               onMouseDown={(e) => handleNodeDragStart(e, node.id)}
+              onTouchStart={(e) => handleNodeTouchStart(e, node.id)}
               onClick={(e) => handleNodeClick(e, node.id)}
             >
               <circle
