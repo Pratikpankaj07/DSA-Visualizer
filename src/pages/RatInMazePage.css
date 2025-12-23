@@ -1,0 +1,178 @@
+/* RatInMazePage.css */
+
+/* Reusing vars structure from Dijkstra for consistency */
+:root {
+    --rat-wall: #1f2937;
+    --rat-path: #3b82f6;
+    /* Final path color */
+    --rat-visiting: #f59e0b;
+    --rat-backtrack: #ef4444;
+    --rat-cell-bg: rgba(255, 255, 255, 0.05);
+    --rat-cell-border: rgba(255, 255, 255, 0.1);
+}
+
+.maze-container {
+    display: grid;
+    grid-template-columns: 360px 1fr 400px;
+    height: 100vh;
+    width: 100vw;
+    background: var(--main-bg-grad);
+    /* Defined in Dijkstra or global, assuming we reuse or redefine */
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+}
+
+/* Ensure we have the background if loaded independently */
+.maze-container {
+    --main-bg-grad: linear-gradient(135deg, #0f172a 0%, #1e1e2e 100%);
+}
+
+.maze-grid-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    padding: 40px;
+    padding-bottom: 150px;
+    /* Shift maze upwards */
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.grid-board {
+    display: grid;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    background: var(--rat-cell-bg);
+    border: 1px solid var(--rat-cell-border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.cell:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+.cell.wall {
+    background: var(--rat-wall);
+    border-color: #000;
+    box-shadow: inset 0 0 10px #000;
+}
+
+.cell.start {
+    background: radial-gradient(circle, #60a5fa, #2563eb);
+    box-shadow: 0 0 10px #2563eb;
+    border: none;
+    font-weight: bold;
+    color: white;
+}
+
+.cell.end {
+    background: radial-gradient(circle, #f87171, #dc2626);
+    box-shadow: 0 0 10px #dc2626;
+    border: none;
+    font-weight: bold;
+    color: white;
+}
+
+.cell.visiting {
+    background: var(--rat-visiting);
+    box-shadow: 0 0 15px var(--rat-visiting);
+    transform: scale(1.1);
+    z-index: 10;
+    border: none;
+}
+
+.cell.blocked {
+    background: #ef4444;
+    box-shadow: 0 0 15px #ef4444;
+    animation: shake 0.3s;
+    z-index: 10;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.cell.backtrack {
+    background: rgba(239, 68, 68, 0.5);
+    /* Faded red */
+    border: 1px solid #ef4444;
+    color: transparent;
+    transform: scale(0.9);
+    transition: all 0.3s;
+}
+
+.cell.path {
+    background: var(--rat-path);
+    box-shadow: 0 0 10px var(--rat-path);
+    border: none;
+    animation: pulsePath 2s infinite;
+}
+
+@keyframes pulsePath {
+    0% {
+        box-shadow: 0 0 10px var(--rat-path);
+    }
+
+    50% {
+        box-shadow: 0 0 20px var(--rat-path);
+    }
+
+    100% {
+        box-shadow: 0 0 10px var(--rat-path);
+    }
+}
+
+/* Control Panel Reuse */
+._panel {
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Utils for icons inside cells */
+.icon {
+    font-size: 1.2rem;
+}

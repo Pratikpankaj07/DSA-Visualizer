@@ -1,0 +1,148 @@
+/* KnapsackPage.css */
+
+/* Reusing vars structure */
+:root {
+    --dp-cell-bg: rgba(255, 255, 255, 0.05);
+    --dp-cell-border: rgba(255, 255, 255, 0.1);
+    --dp-active: #f59e0b;
+    /* Current cell being computed */
+    --dp-compare: #3b82f6;
+    /* Standard comparison (Top cell) */
+    --dp-source: #8b5cf6;
+    /* Source comparison (Top-Left cell) */
+    --dp-path: #10b981;
+    /* Final path */
+}
+
+.knapsack-container {
+    display: grid;
+    grid-template-columns: 360px 1fr 400px;
+    height: 100vh;
+    width: 100vw;
+    background: var(--main-bg-grad);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+}
+
+.knapsack-container {
+    --main-bg-grad: linear-gradient(135deg, #0f172a 0%, #1e1e2e 100%);
+}
+
+.dp-area {
+    padding: 40px;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.dp-table {
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+.dp-cell {
+    width: 80px;
+    height: 80px;
+    background: var(--dp-cell-bg);
+    border: 1px solid var(--dp-cell-border);
+    border-radius: 6px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.2s;
+    position: relative;
+}
+
+.dp-header-row .dp-cell {
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--text-secondary);
+    font-size: 14px;
+    border: none;
+}
+
+.dp-header-col {
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--text-secondary);
+    font-size: 14px;
+    border: none;
+    width: 120px;
+    /* Wider for Item names */
+    padding: 0 10px;
+}
+
+/* Animations/Highlights */
+.dp-cell.active {
+    background: var(--dp-active);
+    color: black;
+    box-shadow: 0 0 15px var(--dp-active);
+    transform: scale(1.1);
+    z-index: 10;
+    font-weight: bold;
+}
+
+.dp-cell.compare {
+    border: 2px solid var(--dp-compare);
+    background: rgba(59, 130, 246, 0.2);
+    color: white;
+}
+
+.dp-cell.source {
+    border: 2px solid var(--dp-source);
+    background: rgba(139, 92, 246, 0.2);
+    color: white;
+}
+
+.dp-cell.path {
+    background: var(--dp-path);
+    color: black;
+    font-weight: bold;
+    box-shadow: 0 0 10px var(--dp-path);
+    animation: pulsePath 2s infinite;
+}
+
+/* Item List in Controls */
+.item-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 5px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.item-row.selected {
+    border: 1px solid var(--dp-path);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.formula-box {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.val-highlight {
+    color: #f59e0b;
+    font-weight: bold;
+}
+
+.val-compare {
+    color: #3b82f6;
+    font-weight: bold;
+}
+
+.val-source {
+    color: #8b5cf6;
+    font-weight: bold;
+}

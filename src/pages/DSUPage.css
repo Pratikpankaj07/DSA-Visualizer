@@ -1,0 +1,174 @@
+/* DSUPage.css */
+
+:root {
+    --dsu-node-bg: #1f2937;
+    --dsu-node-border: #4b5563;
+    --dsu-root: #8b5cf6;
+    /* Purple for Roots */
+    --dsu-active: #f59e0b;
+    /* Orange for Active/Visiting */
+    --dsu-highlight: #10b981;
+    /* Green for Found/Done */
+    --dsu-line: rgba(255, 255, 255, 0.2);
+}
+
+.dsu-container {
+    display: grid;
+    grid-template-columns: 360px 1fr 300px;
+    height: 100vh;
+    width: 100vw;
+    background: var(--main-bg-grad);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+}
+
+.dsu-container {
+    --main-bg-grad: linear-gradient(135deg, #0f172a 0%, #1e1e2e 100%);
+}
+
+.dsu-canvas-area {
+    position: relative;
+    overflow: auto;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Center the tree if possible, though absolute positioning used */
+}
+
+/* Nodes */
+.dsu-node {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--dsu-node-bg);
+    border: 2px solid var(--dsu-node-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: white;
+    position: absolute;
+    /* Positioned by React layout engine */
+    transition: all 0.5s ease;
+    z-index: 10;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dsu-node:hover {
+    transform: scale(1.1);
+    border-color: white;
+}
+
+.dsu-node.root {
+    border-color: var(--dsu-root);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+}
+
+.dsu-node.active {
+    background: var(--dsu-active);
+    border-color: white;
+    color: black;
+    transform: scale(1.15);
+    box-shadow: 0 0 20px var(--dsu-active);
+    z-index: 20;
+}
+
+.dsu-node.selected {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.2);
+    border-style: dashed;
+}
+
+/* Rank Badge */
+.rank-badge {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    background: #374151;
+    border: 1px solid #6b7280;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Edges */
+.dsu-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.edge-line {
+    stroke: var(--dsu-line);
+    stroke-width: 2;
+    transition: all 0.5s ease;
+}
+
+.edge-line.active {
+    stroke: var(--dsu-active);
+    stroke-width: 3;
+    stroke-dasharray: 5;
+    animation: dash 1s linear infinite;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: -10;
+    }
+}
+
+/* Array View (Right Panel) */
+.array-container {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.array-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px;
+    border-radius: 6px;
+    width: 45px;
+}
+
+.array-idx {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 2px;
+}
+
+.array-val {
+    font-weight: bold;
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.array-val.misaligned {
+    color: var(--dsu-active);
+}
